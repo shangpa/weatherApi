@@ -25,11 +25,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # 4. 스프링부트 실행 (환경 변수 주입)
+      # 4. bootRun 대신 test 실행
       - name: Fetch Weather Data
         env:
           DATA_API_KEY: ${{ secrets.DATA_API_KEY }}
-        run: ./gradlew bootRun
+        run: ./gradlew test
 
       # 5. 변경된 weather.json 저장소에 반영
       - name: Commit and Push changes
