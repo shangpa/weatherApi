@@ -29,7 +29,7 @@ async function loadWeather() {
   
   try {
     // 1. weather.json 호출
-    const response = await fetch('/weather.json')
+    const response = await fetch('/weatherApi/weather.json');
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
 
