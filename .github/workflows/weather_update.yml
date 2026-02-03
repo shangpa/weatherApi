@@ -38,16 +38,15 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # 1. 일단 새로 생성된 weather.json을 스테이징에 올림
+          # 1. 일단 변경된 파일을 스테이징하고 커밋함 (깨끗한 상태 만들기)
           git add weather.json
-          
-          # 2. 서버의 최신 내용을 가져오되, 충돌 시 현재 변경사항(weather.json)을 유지
-          git pull origin master --rebase -X ours
-          
-          # 3. 커밋 (변경사항이 없으면 패스)
           git commit -m "Update weather data: $(date)" || echo "No changes to commit"
           
-          # 4. 푸시
+          # 2. 서버의 최신 내용을 가져오면서 내 커밋을 그 위로 쌓음
+          # 충돌 시 서버가 아닌 '방금 내가 만든 파일'을 우선함
+          git pull origin master --rebase -X ours
+          
+          # 3. 최종적으로 서버에 올림
           git push origin master
 
       # 3. 루트(/)에 있는 모든 파일(index.html, weather.json 등)을 배포 유물로 업로드
