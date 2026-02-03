@@ -1,0 +1,41 @@
+name: Weather Data Update
+
+on:
+  schedule:
+    - cron: '5 * * * *' # 매시간 5분마다 실행 (예: 1:05, 2:05...)
+  workflow_dispatch: # 직접 실행해볼 수 있는 버튼 생성
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 소스코드 체크아웃
+      - uses: actions/checkout@v4
+
+      # 2. 자바 환경 설정 (재민님이 쓰시는 버전으로 수정 가능, 여기선 17 기준)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      # 3. 권한 부여 및 빌드
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # 4. 스프링부트 실행 (환경 변수 주입)
+      - name: Fetch Weather Data
+        env:
+          DATA_API_KEY: ${{ secrets.DATA_API_KEY }}
+        run: ./gradlew bootRun
+
+      # 5. 변경된 weather.json 저장소에 반영
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add weather.json
+          git commit -m "Update weather data: $(date)" || echo "No changes to commit"
+          git push
