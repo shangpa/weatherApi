@@ -55,6 +55,15 @@
     font-size: 1.1rem;
     word-break: break-all; /* 주소가 길 경우 줄바꿈 */
 }
+/* span 태그 색상 고정 */
+.contact-info span {
+    color: #222; /* 파란색이 아닌 진한 회색/검정색으로 설정 */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    word-break: break-all;
+    transition: color 0.2s; /* 호버 시 부드러운 색상 변경을 위해 추가 */
+}
 
 .contact-info a:hover {
     color: #0066b3;
@@ -67,16 +76,28 @@
 .fa-blog { color: #00c300; }
 .fa-instagram { color: #e1306c; }
 
-/* 반응형 모바일 설정 */
 @media (max-width: 768px) {
+    .contact-list {
+        flex-direction: row; /* 세로에서 가로 배치로 변경 */
+        justify-content: center;
+        gap: 30px;
+        margin-top: 50px;
+    }
+
     .contact-item {
-        padding: 15px;
+        padding: 20px;
+        border-radius: 50%; /* 모바일에서는 동그란 버튼 형태 */
+        width: 70px;
+        height: 70px;
+        justify-content: center;
     }
+
     .contact-icon {
-        font-size: 1.5rem;
-        margin-right: 15px;
+        margin-right: 0; /* 텍스트가 없으므로 마진 제거 */
+        font-size: 2rem;
     }
-    .contact-info a {
-        font-size: 1rem;
+
+    .contact-info {
+        display: none; /* 아이콘만 보이게 텍스트 숨김 */
     }
 }
