@@ -23,10 +23,10 @@ skillItems.forEach((item) => {
   });
 });
 
-/* [추가] Weather Logic */
+/* Weather Logic */
 async function loadWeather() {
   const container = document.getElementById('weather-container');
-  
+
   try {
     // 1. weather.json 호출
     const response = await fetch('/weatherApi/weather.json');
@@ -35,7 +35,8 @@ async function loadWeather() {
 
     const temp = parseFloat(data.temp);
     const rain = data.rain;
-    const skyCode = data.skyCode; // PTY 코드: 0(없음), 1(비), 2(비/눈), 3(눈), 4(소나기)
+    const skyCode = data.skyCode;
+    const lastUpdate = data.lastUpdate; // [추가] 자바에서 저장한 시간 데이터
 
     // 2. 날씨 아이콘 및 조언 로직
     let weatherIcon = "fa-sun";
@@ -43,23 +44,24 @@ async function loadWeather() {
 
     if (rain !== "0" || skyCode !== "0") {
       weatherIcon = "fa-cloud-showers-heavy";
-      advice = "비나 눈이 오는 날에는 하체 운동이 제맛이죠! 접지력 좋은 신발 신고 안전하게 득근하세요. 🏋️‍♂️";
+      advice = "비나 눈이 오는 날이니까 우산을 챙겨주세요 ☔";
     } else if (temp < -5) {
       weatherIcon = "fa-snowflake";
-      advice = "날씨가 많이 춥습니다! 🥶 실내에서 웜업 충분히 하시고 이두/삼두 운동으로 팔 펌핑 어떠신가요?";
+      advice = "날씨가 많이 춥습니다! 따듯하게 입으세요 🧣";
     } else {
       weatherIcon = "fa-cloud-sun";
-      advice = "운동하기 딱 좋은 날씨네요! 오늘 같은 날은 등 운동 후 가벼운 유산소까지 강력 추천합니다. 🔥";
+      advice = "좋은 날씨네요! 오늘도 즐거운 하루 되세요. 😊";
     }
 
-    // 3. HTML 렌더링
+    // 3. HTML 렌더링 (홍대 고정 및 업데이트 시간 표시)
     container.innerHTML = `
       <div class="weather-info-main">
         <i class="fas ${weatherIcon} weather-icon"></i>
         <span class="weather-temp">${temp}°C</span>
       </div>
       <div class="weather-details">
-        <span>강수량: ${rain}mm | 현재 수원의 날씨 실황입니다.</span>
+        <p>강수량: ${rain}mm | <strong>현재 홍대(마포구)</strong>의 날씨 실황입니다.</p>
+        <p class="update-time">최종 업데이트: ${lastUpdate}</p>
       </div>
       <div class="fitness-comment">
         ${advice}
@@ -72,5 +74,4 @@ async function loadWeather() {
   }
 }
 
-// 페이지 로드 시 날씨 함수 실행
 window.addEventListener('DOMContentLoaded', loadWeather);

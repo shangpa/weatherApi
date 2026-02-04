@@ -11,6 +11,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -40,8 +41,8 @@ public class WeatherService {
                     .queryParam("dataType", "JSON")
                     .queryParam("base_date", baseDate)
                     .queryParam("base_time", baseTime)
-                    .queryParam("nx", "60")
-                    .queryParam("ny", "121")
+                    .queryParam("nx", "59")
+                    .queryParam("ny", "126")
                     .build(true)
                     .toUri();
 
@@ -54,6 +55,11 @@ public class WeatherService {
             JsonNode items = root.path("response").path("body").path("items").path("item");
 
             Map<String, String> weatherData = new HashMap<>();
+
+            // [추가] 마지막으로 새로고침된(데이터를 가져온) 시간 기록
+            // 형식: 2024-05-20 14:30:05
+            String lastUpdateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            weatherData.put("lastUpdate", lastUpdateTime);
 
             // 데이터가 비어있지 않은지 확인 후 루프
             if (items.isArray()) {
