@@ -36,7 +36,6 @@ async function loadWeather() {
       </div>
       <div class="weather-details">
         <p>강수량: ${rain}mm | <strong>현재 홍대(마포구)</strong>의 날씨 실황입니다.</p>
-        <p class="update-time">최종 업데이트: ${formatTimeHM(lastUpdate)}</p>
       </div>
       <div class="fitness-comment">
         ${advice}
