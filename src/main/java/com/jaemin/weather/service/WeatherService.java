@@ -31,7 +31,7 @@ public class WeatherService {
         try {
             RestTemplate restTemplate = new RestTemplate();
 
-            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime now = LocalDateTime.now().plusHours(9);
 
             // 기상청 실황은 매시 40분 이후에 생성되므로, 40분 전이면 한 시간 전 데이터를 요청
             if (now.getMinute() < 40) {
