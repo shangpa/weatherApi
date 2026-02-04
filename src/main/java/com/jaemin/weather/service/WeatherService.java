@@ -31,15 +31,14 @@ public class WeatherService {
         try {
             RestTemplate restTemplate = new RestTemplate();
 
-            // [수정] 한국 시간(Asia/Seoul) 기준으로 현재 시간 설정
-            ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+            LocalDateTime now = LocalDateTime.now();
 
             // 기상청 실황은 매시 40분 이후에 생성되므로, 40분 전이면 한 시간 전 데이터를 요청
-            if (nowSeoul.getMinute() < 40) {
-                nowSeoul = nowSeoul.minusHours(1);
+            if (now.getMinute() < 40) {
+                now = now.minusHours(1);
             }
-            String baseDate = nowSeoul.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-            String baseTime = nowSeoul.format(DateTimeFormatter.ofPattern("HH00"));
+            String baseDate = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+            String baseTime = now.format(DateTimeFormatter.ofPattern("HH00"));
 
             URI uri = UriComponentsBuilder.fromUriString(apiUrl)
                     .queryParam("serviceKey", serviceKey) // 디코딩된 키 권장
