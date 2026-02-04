@@ -61,3 +61,34 @@
 
 .progress-fill.active {
 }
+/* 반응형 디자인: 768px 이하일 때 */
+@media screen and (max-width: 768px) {
+  .weather-section {
+    padding: 30px 15px; /* 섹션 여백 축소 */
+  }
+
+  /* 강수량 정보, 업데이트 시간, 조언 문구 숨기기 */
+  .weather-details,
+  .fitness-comment {
+    display: none;
+  }
+
+  /* 컨테이너 여백 조정 */
+  #weather-container {
+    padding: 20px;
+  }
+
+  /* 날씨 아이콘과 온도 사이의 간격 조정 및 크기 유지 */
+  .weather-info-main {
+    margin-bottom: 0; /* 아래쪽 여백 제거 */
+    gap: 15px;
+  }
+
+  .weather-temp {
+    font-size: 2.5rem; /* 모바일 화면에 맞춰 소폭 축소 (선택사항) */
+  }
+
+  .weather-icon {
+    font-size: 2.5rem;
+  }
+}

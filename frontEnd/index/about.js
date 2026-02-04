@@ -22,3 +22,15 @@ skillItems.forEach((item) => {
         }, 10);
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const progressFills = document.querySelectorAll('.progress-fill');
+
+    // 약간의 지연 후 바가 차오르게 함
+    setTimeout(() => {
+        progressFills.forEach(fill => {
+            const rate = fill.dataset.rate;
+            fill.style.width = rate + '%';
+        });
+    }, 300);
+});
