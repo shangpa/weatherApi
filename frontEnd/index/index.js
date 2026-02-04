@@ -36,7 +36,7 @@ async function loadWeather() {
       </div>
       <div class="weather-details">
         <p>강수량: ${rain}mm | <strong>현재 홍대(마포구)</strong>의 날씨 실황입니다.</p>
-        <p class="update-time">최종 업데이트: ${formatKST(lastUpdate)}</p>
+        <p class="update-time">최종 업데이트: ${formatTimeHM(lastUpdate)}</p>
       </div>
       <div class="fitness-comment">
         ${advice}
@@ -49,18 +49,9 @@ async function loadWeather() {
   }
 }
 
-function formatKST(timeString) {
-  const date = new Date(timeString.replace(" ", "T"));
-  // 브라우저 Date 객체로 변환
-
-  return date.toLocaleString("ko-KR", {
-    timeZone: "Asia/Seoul",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
-  });
+// lastUpdate에서 "HH:mm"만 추출
+function formatTimeHM(timeString) {
+  // "2026-02-04 04:44:30" → "04:44"
+  return timeString.substring(11, 16);
 }
 window.addEventListener('DOMContentLoaded', loadWeather);
