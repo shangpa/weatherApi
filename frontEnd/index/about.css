@@ -1,0 +1,43 @@
+.skills-section {
+    padding: 50px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.skills-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.skill-item {
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.skill-item:hover {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.progress-bar {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    height: 12px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background-color: #3498db;
+    height: 100%;
+    border-radius: 10px;
+    width: 0; /* 초기 상태 0 */
+    transition: width 1s ease-in-out;
+}
